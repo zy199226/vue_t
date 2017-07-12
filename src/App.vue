@@ -1,13 +1,16 @@
 <template lang="html">
 	<div id="example">
-		<h1 v-if="seen">{{msg}}</h1>
+		<h1 @mouseover="MOUSEOVER" @mouseleave="ml" v-if="seen">{{msg}}</h1>
+		<p>{{reversedMsg}}</p>
 		<ul>
 			<li v-for="n in 5">{{n}}</li>
 			<li :title="message">{{msg}}</li>
 			<li v-for="todo in todos">{{todo.text}}</li>
+			<li>{{seen ? 'opq' : 'efg'}}</li>
 		</ul>
-		<p>{{abc}}</p>
+		<p @click="log">{{abc}}</p>
 		<input v-model="abc">
+		<div v-html="def"></div>
 	</div>
 </template>
 
@@ -24,14 +27,28 @@ export default {
 				{text: '学习整个项目'}
 			],
 			abc: 'abc',
-
+			def: '<p>this is a p!</p>'
+		}
+	},
+	methods: {
+		click: function () {
+			console.log(123);
+		},
+		log: function () {
+			console.log(456);
+		},
+		MOUSEOVER: function () {
+			// this.seen = !this.seen;
+		},
+		ml: function () {
+			console.log(1);
+		}
+	},
+	computed: {
+		reversedMsg: function () {
+			return this.msg.split('').reverse().join('');
 		}
 	}
-	// methods () {
-	// 	click: function () {
-	// 		console.log(123);
-	// 	}
-	// }
 }
 </script>
 
