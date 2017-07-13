@@ -25,6 +25,7 @@
     "webpack-dev-server": "^2.5.1"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "normalize.css": "^7.0.0",
     "vue": "^2.3.4"
   }
