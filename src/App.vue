@@ -24,6 +24,29 @@
 		</ul>
 		<button @click="count += 1">增加 1</button>
 		<p>{{count}}</p>
+		<button @click="greet">点击</button>
+		<input @keyup.enter="greet">
+		<input type="checkbox" id="haha" value="haha" v-model="checked">
+		<label for="checkbox">{{checked}}</label>
+		<br>
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{ checkedNames }}</span>
+		<select>
+			<option disabled value="">请选择</option>
+			<option>a</option>
+			<option>b</option>
+			<option>c</option>
+		</select>
+		<br>
+		<input type="checkbox" v-model="toggle" :true-value="a" :false-value="b">
+		<label for="">{{toggle}}</label>
+		<input v-model.lazy="aa">
 	</div>
 </template>
 
@@ -49,6 +72,12 @@ export default {
 			},
 			numbers: [1, 2, 3, 4, 5],
 			count: 0,
+			checked: true,
+			checkedNames: [],
+			toggle: '',
+			a: 'a',
+			b: 'b',
+			aa: 'aa'
 		}
 	},
 	watch: {
@@ -73,7 +102,10 @@ export default {
 		// 	function () {
 		// 		console.log(123456789);
 		// 	}, 500
-		// )
+		// ),
+		greet: function (event) {
+			console.log(this);
+		},
 	},
 	computed: {
 		reversedMsg: function () {
