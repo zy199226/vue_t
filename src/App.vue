@@ -104,6 +104,7 @@ export default {
 		// 	}, 500
 		// ),
 		greet: function (event) {
+			
 			console.log(this);
 		},
 	},
