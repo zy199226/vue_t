@@ -53,81 +53,78 @@
 <script>
 
 export default {
-	data () {
-		return {
-			msg: 'Hello World!',
-			message: '页面加载于：' + new Date(),
-			seen: true,
-			todos: [
-				{text: '学习javascript'},
-				{text: '学习vue'},
-				{text: '学习整个项目'}
-			],
-			abc: 'efg',
-			def: '<p>this is a p!</p>',
-			activeColor: 'red',
-			styleObject: {
-				border: '1px solid red',
-				color: 'pink'
-			},
-			numbers: [1, 2, 3, 4, 5],
-			count: 0,
-			checked: true,
-			checkedNames: [],
-			toggle: '',
-			a: 'a',
-			b: 'b',
-			aa: 'aa'
-		}
-	},
-	watch: {
-		abc: function (n) {
-			console.log(n);
-		}
-	},
-	methods: {
-		click: function () {
-			console.log(123);
-		},
-		log: function () {
-			console.log(456);
-		},
-		MOUSEOVER: function () {
+    data() {
+        return {
+            msg: 'Hello World!',
+            message: `页面加载于：${new Date()}`,
+            seen: true,
+            todos: [
+				{ text: '学习javascript' },
+				{ text: '学习vue' },
+				{ text: '学习整个项目' }
+            ],
+            abc: 'efg',
+            def: '<p>this is a p!</p>',
+            activeColor: 'red',
+            styleObject: {
+                border: '1px solid red',
+                color: '#abcdef'
+            },
+            numbers: [1, 2, 3, 4, 5],
+            count: 0,
+            checked: true,
+            checkedNames: [],
+            toggle: '',
+            a: 'a',
+            b: 'b',
+            aa: 'aa'
+        };
+    },
+    watch: {
+        abc(n) {
+            console.log(n);
+        }
+    },
+    methods: {
+        click() {
+            console.log(123);
+        },
+        log() {
+            console.log(456);
+        },
+        MOUSEOVER() {
 			// this.seen = !this.seen;
-		},
-		ml: function () {
-			console.log(1);
-		},
+        },
+        ml() {
+            console.log(1);
+        },
 		// getAnswer: _.debounce(
 		// 	function () {
 		// 		console.log(123456789);
 		// 	}, 500
 		// ),
-		greet: function (event) {
-			
-			console.log(this);
-		},
-	},
-	computed: {
-		reversedMsg: function () {
-			return this.msg.split('').reverse().join('');
-		},
-		evenNumbers: function () {
-			return this.numbers.filter((n) => {
-				return n % 2 === 0;
-			});
-		}
-	}
-}
+        greet() {
+            console.log(this);
+        }
+    },
+    computed: {
+        reversedMsg() {
+            return this.msg.split('').reverse().join('');
+        },
+        evenNumbers() {
+            return this.numbers.filter(n => n % 2 === 0);
+        }
+    }
+};
 </script>
 
 <style lang="less">
-#example{
+#example {
 	font-size: 1.5em;
 	color: #abcdef;
 	font-weight: 400;
-	ul{
-		li{
+	ul {
+		li {
 			color: pink;
 			font-size: 14px;
 		}

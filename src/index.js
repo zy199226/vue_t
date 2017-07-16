@@ -4,6 +4,6 @@ import App from './App.vue';
 import '../styles/index.less';
 
 new Vue({
-	el: '#app',
-	render: h => h(App)
+    el: '#app',
+    render: h => h(App)
 });
