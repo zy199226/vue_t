@@ -54,9 +54,9 @@
         <br>
         <button @click="greet">click</button>
         <br>
-        <button>-1s</button>
-        <span>{{store.state.count}}s</span>
-        <button>+1s</button>
+        <button @click="reduction">-1s</button>
+        <span>{{counts}}s</span>
+        <button @click="increment">+1s</button>
 	</div>
 </template>
 
@@ -92,12 +92,7 @@ export default {
             toggle: '',
             a: 'a',
             b: 'b',
-            aa: 'aa',
-            store: {
-                state: {
-                    count: 0
-                }
-            }
+            aa: 'aa'
         };
     },
     watch: {
@@ -125,6 +120,18 @@ export default {
 		// ),
         greet() {
             console.log(this);
+        },
+        increment() {
+            // this.$store.commit('increment');
+            this.$store.dispatch('increment').then(() => {
+                console.log(123);
+            });
+            // console.log(this);
+        },
+        reduction() {
+            // this.$store.commit('reduction');
+            this.$store.dispatch('reduction');
+            console.log(this);
         }
     },
     computed: mapState({
@@ -133,10 +140,10 @@ export default {
         },
         evenNumbers() {
             return this.numbers.filter(n => n % 2 === 0);
+        },
+        counts() {
+            return this.$store.state.count;
         }
-        // counts() {
-        //     return this.store.state.count;
-        // }
     }),
     created() {
         console.log(this);

@@ -14,5 +14,18 @@ export default new Vuex.Store({
         reduction(state) {
             state.count -= 1;
         }
+    },
+    actions: {
+        increment(context) {
+            // console.log(context);
+            // context.commit('increment');
+            return new Promise((resolve) => {
+                context.commit('increment');
+                resolve();
+            });
+        },
+        reduction({ commit }) {
+            commit('reduction');
+        }
     }
 });
