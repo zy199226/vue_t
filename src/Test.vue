@@ -57,6 +57,10 @@
         <button @click="reduction">-1s</button>
         <span>{{counts}}s</span>
         <button @click="increment">+1s</button>
+        <br>
+        <button @click="red">-1s</button>
+        <span>{{cou}}s</span>
+        <button @click="inc">+1s</button>
 	</div>
 </template>
 
@@ -132,6 +136,12 @@ export default {
             // this.$store.commit('reduction');
             this.$store.dispatch('reduction');
             console.log(this);
+        },
+        inc() {
+            this.$store.dispatch('inc');
+        },
+        red() {
+            this.$store.dispatch('red');
         }
     },
     computed: mapState({
@@ -143,6 +153,9 @@ export default {
         },
         counts() {
             return this.$store.state.count;
+        },
+        cou() {
+            return this.$store.state.cou;
         }
     }),
     created() {

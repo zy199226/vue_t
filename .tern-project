@@ -4,7 +4,8 @@
     "browser"
   ],
   "loadEagerly": [
-    "E:\\test"
+    "C:\\test",
+    "C:\\333"
   ],
   "dontLoad": [
     "node_module/**"
