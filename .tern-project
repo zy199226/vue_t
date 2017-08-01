@@ -3,10 +3,7 @@
   "libs": [
     "browser"
   ],
-  "loadEagerly": [
-    "C:\\test",
-    "C:\\333"
-  ],
+  "loadEagerly": [],
   "dontLoad": [
     "node_module/**"
   ],
