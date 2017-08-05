@@ -16,4 +16,7 @@ export default {
         width: 100%;
         background: #e1e1e1;
     }
+    input{
+        outline: none;
+    }
 </style>
