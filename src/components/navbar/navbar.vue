@@ -1,15 +1,18 @@
 <template lang="html">
     <div class="navbar">
         <div class="container">
-            <icon class="Category" name="Category" scale="1.6"></icon>
+            <i>&#xe900;</i>
+            <div class="shadowBox" ref="shadowBox"></div>
             <router-link class="brand" :to="{ name: '', params: {} }">
                 <img src="../../assets/vue.png" alt="vue_t">
                 <span>vue.js</span>
             </router-link>
-            <form class="navbarSearch" action="/search">
-                <input type="text" name="" value="">
-                <icon name="search" scale="1.6"></icon>
-            </form>
+            <div class="navbarSearch" ref="navbarSearch">
+                <form action="/search">
+                    <input type="text" name="" value="">
+                    <i @click="search">&#xe901;</i>
+                </form>
+            </div>
             <div class="navLinks">
                 <ul>
                     <li v-for="link in navLinks">
@@ -39,6 +42,28 @@ export default {
         };
     },
     methods: {
+        search() {
+            const searchInput = this.$refs.navbarSearch;
+            const input = searchInput.querySelector('input');
+            if (searchInput.classList.contains('navbarSearchClick')) {
+                searchInput.classList.remove('navbarSearchClick');
+                input.disabled = true;
+                input.blur();
+                input.value = '';
+                this.shadowBoxHide();
+            } else {
+                searchInput.classList.add('navbarSearchClick');
+                input.disabled = false;
+                input.focus();
+                this.shadowBoxShow();
+            }
+        },
+        shadowBoxShow() {
+            this.$refs.shadowBox.style.visibility = 'visible';
+        },
+        shadowBoxHide() {
+            this.$refs.shadowBox.style.visibility = 'hidden';
+        }
     }
 };
 </script>
