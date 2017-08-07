@@ -17,8 +17,12 @@
         position: fixed;
         left: 0;
         top: 0;
-        background: rgba(0, 0, 0, 0.4);
         transition: all .5s ease-in-out;
+        z-index: 1;
+    }
+    .shadowBoxShow{
+        visibility: visible;
+        background: rgba(0, 0, 0, 0.3);
     }
     > i{
         font-size: .6em;
@@ -27,12 +31,15 @@
         top: 50%;
         left: 5px;
         transform: translateY(-50%);
+        cursor: pointer;
     }
 }
 
 .brand{
     display: block;
+    width: 2em;
     padding: 0 20px;
+    margin: auto;
     img{
         display: block;
         height: 1em;
@@ -40,7 +47,7 @@
         margin: auto;
     }
     span{
-        display: none;
+        visibility: hidden;
         font-size: .5em;
         vertical-align: middle;
         text-shadow: 1px 1px 0 #fff;
@@ -51,17 +58,21 @@
 }
 
 .navbarSearch{
+    height: 24px;
     position: absolute;
     top: 50%;
     right: 5px;
     transform: translateY(-50%);
+    line-height: 24px;
+    z-index: 2;
     form{
         display: inline-block;
         position: relative;
+        vertical-align: top;
         i, input{
             transition: all .5s;
         }
-        > i{
+        i{
             font-size: 16px;
             position: absolute;
             top: 50%;
@@ -83,14 +94,6 @@
                 background: #fff;
             }
         }
-        // &:hover{
-        //     input{
-        //         background: #fff;
-        //     }
-        //     > i{
-        //         color: #f70085;
-        //     }
-        // }
     }
 }
 
@@ -103,23 +106,99 @@
         input{
             width: 100%;
             padding: 0 26px 0 10px;
-            background: #fff;
-        }
-        > i{
-            color: #f70085;
         }
     }
 }
 
 .navLinks{
+    visibility: hidden;
     font-size: 16px;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    transition: all .5s;
     ul{
-        margin: 0;
-        padding: 0;
+        width: 10em;
+        height: 100%;
+        background: #ff73be;
+        margin: 0 0 0 -10em;
+        padding: 20px 0 0;
+        box-sizing: border-box;
+        transition: all .5s ease-in-out;
+        overflow: auto;
         li{
             list-style: none;
+            padding: 10px 20px;
+            border-bottom: .3px solid #fff;
             a{
+                display: block;
                 text-decoration: none;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.navLinksMove{
+    visibility: visible;
+    background: rgba(0, 0, 0, 0.3);
+    ul{
+        margin-left: 0;
+    }
+}
+
+@media (min-width:768px) {
+    .container{
+        font-size: 40px;
+    }
+    .navbarSearch{
+        font-size: 40px;
+    }
+}
+
+@media (min-width:980px) {
+    .container{
+        font-size: 45px;
+        line-height: 1em;
+        > i{
+            display: none;
+        }
+    }
+    .brand{
+        float: left;
+        width: auto;
+        line-height: 45px;
+        padding: 0 40px 0 0;
+        text-decoration: none;
+        img{
+            margin: 0;
+            display: inline;
+            vertical-align: top;
+        }
+        span{
+            visibility: visible;
+            vertical-align: top;
+            margin-left: -10px;
+        }
+    }
+    .navbarSearch{
+        display: inline-block;
+        position: inherit;
+        vertical-align: top;
+        form{
+            input{
+                width: 230px;
+                padding: 0 26px 0 10px;
+            }
+            &:hover{
+                input{
+                    background: #fff;
+                }
+                > i{
+                    color: #f70085;
+                }
             }
         }
     }

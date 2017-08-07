@@ -1,20 +1,23 @@
 <template lang="html">
     <div class="navbar">
-        <div class="container">
-            <i>&#xe900;</i>
-            <div class="shadowBox" ref="shadowBox"></div>
-            <router-link class="brand" :to="{ name: '', params: {} }">
+        <div class="container" ref="container">
+            <i @click="slideBarMove">&#xe900;</i>
+            <div :class="['shadowBox', { shadowBoxShow: Focus }]" ref="shadowBox"></div>
+            <router-link class="brand" to="/">
                 <img src="../../assets/vue.png" alt="vue_t">
-                <span>vue.js</span>
+                <span>Vue.js</span>
             </router-link>
             <div class="navbarSearch" ref="navbarSearch">
                 <form action="/search">
-                    <input type="text" name="" value="">
-                    <i @click="search">&#xe901;</i>
+                    <input type="text"
+                    @focus="inputFocus"
+                    @blur="inputBlur"
+                    :style="{ background: Focus ? '#fff' : '#fcb1d9' }">
+                    <i @click="search" :style="{ color: Focus ? '#f70085' : '#fff' }">&#xe901;</i>
                 </form>
             </div>
-            <div class="navLinks">
-                <ul>
+            <div :class="['navLinks', { navLinksMove: slideBar }]" ref="navLinks" @click="slideBarMove">
+                <ul @click="stop(this)">
                     <li v-for="link in navLinks">
                         <a v-if="link.src.match('http')" :href="link.src">{{link.name}}</a>
                         <router-link v-else :to="link.src">{{link.name}}</router-link>
@@ -26,6 +29,8 @@
 </template>
 
 <script>
+import { ww, wh, stopBubble } from '../../until/until';
+
 export default {
     data() {
         return {
@@ -38,7 +43,9 @@ export default {
                 { name: '关于', src: '/' },
                 { name: '设置', src: '/' },
                 { name: '退出', src: '/' }
-            ]
+            ],
+            Focus: false,
+            slideBar: false
         };
     },
     methods: {
@@ -46,24 +53,43 @@ export default {
             const searchInput = this.$refs.navbarSearch;
             const input = searchInput.querySelector('input');
             if (searchInput.classList.contains('navbarSearchClick')) {
-                searchInput.classList.remove('navbarSearchClick');
-                input.disabled = true;
+                console.log(111);
                 input.blur();
+                searchInput.classList.remove('navbarSearchClick');
                 input.value = '';
-                this.shadowBoxHide();
+                input.disabled = true;
             } else {
-                searchInput.classList.add('navbarSearchClick');
+                console.log(222);
                 input.disabled = false;
                 input.focus();
-                this.shadowBoxShow();
+                searchInput.classList.add('navbarSearchClick');
             }
         },
-        shadowBoxShow() {
-            this.$refs.shadowBox.style.visibility = 'visible';
+        slideBarMove() {
+            this.slideBar = !this.slideBar;
         },
-        shadowBoxHide() {
-            this.$refs.shadowBox.style.visibility = 'hidden';
+        stop(e) {
+            stopBubble(e);
+        },
+        windowResize(winH, winW) {
+            const headerHeight = this.$refs.container.offsetHeight;
+            this.$refs.navLinks.style.cssText = `top: ${headerHeight}px;height: ${winH - headerHeight}px`;
+            if (winW <= 980) {
+                this.$refs.navbarSearch.querySelector('input').disabled = false;
+            }
+        },
+        inputFocus() {
+            this.Focus = true;
+            console.log(333);
+        },
+        inputBlur() {
+            this.Focus = false;
+            console.log(444);
         }
+    },
+    mounted() {
+        this.windowResize(wh, ww);
+        window.onresize = () => this.windowResize(window.innerHeight, window.innerWidth);
     }
 };
 </script>

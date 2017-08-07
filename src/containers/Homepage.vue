@@ -1,5 +1,7 @@
 <template lang="html">
-    <Navbar />
+    <div class="">
+        <Navbar />
+    </div>
 </template>
 
 <script>
@@ -8,6 +10,12 @@ import Navbar from '../components/navbar/navbar.vue';
 export default {
     components: {
         Navbar
+    },
+    data() {
+        return {
+        };
+    },
+    methods: {
     }
 };
 </script>
