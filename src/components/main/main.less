@@ -1,0 +1,33 @@
+#main{
+    width: 90%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 15px 0;
+    zoom: 1;
+    #content{
+        height: 300px;
+        margin-right: 305px;
+        background: #333;
+        p{
+            margin: 0;
+        }
+    }
+    #sideBar{
+        height: 400px;
+        width: 290px;
+        float: right;
+        background: #999;
+    }
+    &:after{
+        content: '';
+        display: block;
+        clear: both;
+        visibility: hidden;
+    }
+}
+
+@media (max-width:980px) {
+    #sideBar{
+        display: none;
+    }
+}
