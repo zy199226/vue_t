@@ -2,21 +2,24 @@
     <div class="navbar">
         <div class="container" ref="container">
             <i @click="slideBarMove">&#xe900;</i>
-            <div :class="['shadowBox', { shadowBoxShow: Focus }]" ref="shadowBox"></div>
+            <div :class="['shadowBox', { shadowBoxShow: (Focus && windowW<980) }]" ref="shadowBox"></div>
             <router-link class="brand" to="/">
                 <img src="../../assets/vue.png" alt="vue_t">
                 <span>Vue.js</span>
             </router-link>
-            <div class="navbarSearch" ref="navbarSearch">
+            <div :class="['navbarSearch', { navbarSearchClick: (Focus && windowW<980) }]">
                 <form action="/search">
-                    <input type="text"
+                    <input type="text" ref="searchInput"
                     @focus="inputFocus"
                     @blur="inputBlur"
-                    :style="{ background: Focus ? '#fff' : '#fcb1d9' }">
+                    :style="{ background: Focus ? '#fff' : '#fcb1d9' }"
+                    :disabled="windowW<980 ? true : false">
                     <i @click="search" :style="{ color: Focus ? '#f70085' : '#fff' }">&#xe901;</i>
                 </form>
             </div>
-            <div :class="['navLinks', { navLinksMove: slideBar }]" ref="navLinks" @click="slideBarMove">
+            <div :class="['navLinks', { navLinksMove: slideBar }]" ref="navLinks"
+            @click="slideBarMove"
+            :style="windowW<980 ? `top: ${headerHeight}px;height: ${windowH - headerHeight}px` : ''">
                 <ul @click="stop(this)">
                     <li v-for="link in navLinks">
                         <a v-if="link.src.match('http')" :href="link.src">{{link.name}}</a>
@@ -45,24 +48,24 @@ export default {
                 { name: '退出', src: '/' }
             ],
             Focus: false,
-            slideBar: false
+            slideBar: false,
+            windowH: wh,
+            windowW: ww,
+            headerHeight: ''
         };
     },
     methods: {
         search() {
-            const searchInput = this.$refs.navbarSearch;
-            const input = searchInput.querySelector('input');
-            if (searchInput.classList.contains('navbarSearchClick')) {
-                console.log(111);
-                input.blur();
-                searchInput.classList.remove('navbarSearchClick');
-                input.value = '';
-                input.disabled = true;
-            } else {
-                console.log(222);
-                input.disabled = false;
-                input.focus();
-                searchInput.classList.add('navbarSearchClick');
+            const searchInput = this.$refs.searchInput;
+            if (this.windowW <= 980) {
+                if (!this.Focus) {
+                    searchInput.disabled = false;
+                    searchInput.focus();
+                    this.Focus = true;
+                } else {
+                    searchInput.disabled = true;
+                    this.Focus = false;
+                }
             }
         },
         slideBarMove() {
@@ -71,25 +74,26 @@ export default {
         stop(e) {
             stopBubble(e);
         },
-        windowResize(winH, winW) {
-            const headerHeight = this.$refs.container.offsetHeight;
-            this.$refs.navLinks.style.cssText = `top: ${headerHeight}px;height: ${winH - headerHeight}px`;
-            if (winW <= 980) {
-                this.$refs.navbarSearch.querySelector('input').disabled = false;
-            }
+        windowResize(winH, winW, headerHeight) {
+            this.windowH = winH;
+            this.windowW = winW;
+            this.headerHeight = headerHeight;
         },
         inputFocus() {
-            this.Focus = true;
-            console.log(333);
+            if (this.windowW > 980) {
+                this.Focus = true;
+            }
         },
         inputBlur() {
-            this.Focus = false;
-            console.log(444);
+            if (this.windowW > 980) {
+                this.Focus = false;
+            }
         }
     },
     mounted() {
-        this.windowResize(wh, ww);
-        window.onresize = () => this.windowResize(window.innerHeight, window.innerWidth);
+        this.headerHeight = this.$refs.container.offsetHeight;
+        window.onresize = () =>
+        this.windowResize(window.innerHeight, window.innerWidth, this.$refs.container.offsetHeight);
     }
 };
 </script>

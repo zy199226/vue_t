@@ -18,7 +18,7 @@
         left: 0;
         top: 0;
         transition: all .5s ease-in-out;
-        z-index: 1;
+        z-index: 2;
     }
     .shadowBoxShow{
         visibility: visible;
@@ -64,7 +64,7 @@
     right: 5px;
     transform: translateY(-50%);
     line-height: 24px;
-    z-index: 2;
+    z-index: 3;
     form{
         display: inline-block;
         position: relative;
@@ -144,6 +144,7 @@
 .navLinksMove{
     visibility: visible;
     background: rgba(0, 0, 0, 0.3);
+    z-index: 1;
     ul{
         margin-left: 0;
     }
@@ -198,6 +199,29 @@
                 }
                 > i{
                     color: #f70085;
+                }
+            }
+        }
+    }
+    .navLinks{
+        width: auto;
+        height: auto;
+        visibility: visible;
+        position: inherit;
+        float: right;
+        ul{
+            width: auto;
+            height: auto;
+            background: none;
+            margin: 0;
+            padding: 0;
+            li{
+                border: none;
+                float: left;
+                padding: 0 0 0 24px;
+                font-size: 13px;
+                &:nth-of-type(1) {
+                    padding: 0;
                 }
             }
         }
