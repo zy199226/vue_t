@@ -1,8 +1,8 @@
 <template lang="html">
-    <div class="navbar">
+    <div id="navbar">
         <div class="container" ref="container">
             <i @click="slideBarMove">&#xe900;</i>
-            <div :class="['shadowBox', { shadowBoxShow: (Focus && windowW<980) }]" ref="shadowBox"></div>
+            <div :class="['shadowBox', { shadowBoxShow: (Focus && windowW<980) }]"></div>
             <router-link class="brand" to="/">
                 <img src="../../assets/vue.png" alt="vue_t">
                 <span>Vue.js</span>
@@ -17,7 +17,7 @@
                     <i @click="search" :style="{ color: Focus ? '#f70085' : '#fff' }">&#xe901;</i>
                 </form>
             </div>
-            <div :class="['navLinks', { navLinksMove: slideBar }]" ref="navLinks"
+            <div :class="['navLinks', { navLinksMove: slideBar }]"
             @click="slideBarMove"
             :style="windowW<980 ? `top: ${headerHeight}px;height: ${windowH - headerHeight}px` : ''">
                 <ul @click="stop(this)">

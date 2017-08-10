@@ -1,26 +1,38 @@
 <template lang="html">
     <Mains>
-        <p slot="content">哈哈</p>
-        <h1 slot="sideBar">呵呵</h1>
+        <Panel slot="content">
+            <span slot="header">首页</span>
+            <TopicList slot="container">
+                <Cell slot="cell"></Cell>
+            </TopicList>
+        </Panel>
     </Mains>
 </template>
 
 <script>
 import Mains from '../components/main/main.vue';
-import Navbar from '../components/navbar/navbar.vue';
+import Panel from '../components/panel/panel.vue';
+import TopicList from '../components/topicList/topicList.vue';
+import Cell from '../components/cell/cell.vue';
 
 export default {
     components: {
         Mains,
-        Navbar
+        Panel,
+        TopicList,
+        Cell
     },
     data() {
         return {
-            name: '哈哈',
-            navbar: Navbar
         };
     },
     methods: {
+    },
+    beforeMount() {
+        this.$store.dispatch('axiosHome', { tab: 'all', limit: 40, pages: 1 });
+    },
+    mounted() {
+        // console.log(this);
     }
 };
 </script>

@@ -1,227 +1,232 @@
-.navbar{
+#navbar{
     background: #ff73be;
-}
 
-.container{
-    font-size: 30px;
-    width: 90%;
-    height: 1em;
-    margin: auto;
-    max-width: 1400px;
-    padding: 5px;
-    position: relative;
-    .shadowBox{
+    .container{
+        font-size: 30px;
+        width: 90%;
+        height: 1em;
+        margin: auto;
+        max-width: 1400px;
+        padding: 5px;
+        position: relative;
+        .shadowBox{
+            visibility: hidden;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: all .5s ease-in-out;
+            z-index: 2;
+        }
+        .shadowBoxShow{
+            visibility: visible;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        > i{
+            font-size: .6em;
+            color: #fff;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    }
+
+    .brand{
+        display: block;
+        width: 2em;
+        padding: 0 20px;
+        margin: auto;
+        img{
+            display: block;
+            height: 1em;
+            vertical-align: middle;
+            margin: auto;
+        }
+        span{
+            visibility: hidden;
+            font-size: .5em;
+            vertical-align: middle;
+            text-shadow: 1px 1px 0 #fff;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 400;
+        }
+    }
+
+    .navbarSearch{
+        height: 24px;
+        position: absolute;
+        top: 50%;
+        right: 5px;
+        transform: translateY(-50%);
+        line-height: 24px;
+        z-index: 3;
+        form{
+            display: inline-block;
+            position: relative;
+            vertical-align: top;
+            i, input{
+                transition: all .5s;
+            }
+            i{
+                font-size: 16px;
+                position: absolute;
+                top: 50%;
+                right: 4px;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #fff;
+            }
+            input{
+                width: 24px;
+                height: 24px;
+                font-size: 14px;
+                border-radius: 24px;
+                border: none;
+                background: #fcb1d9;
+                box-sizing: border-box;
+                float: right;
+                &:focus{
+                    background: #fff;
+                }
+            }
+        }
+    }
+
+    .navbarSearchClick{
+        width: 100%;
+        form{
+            width: 100%;
+            padding-left: 10px;
+            box-sizing: border-box;
+            input{
+                width: 100%;
+                padding: 0 26px 0 10px;
+            }
+        }
+    }
+
+    .navLinks{
         visibility: hidden;
+        font-size: 16px;
         width: 100%;
         height: 100%;
         position: fixed;
         left: 0;
         top: 0;
-        transition: all .5s ease-in-out;
-        z-index: 2;
+        transition: all .5s;
+        ul{
+            width: 10em;
+            height: 100%;
+            background: #ff73be;
+            margin: 0 0 0 -10em;
+            padding: 20px 0 0;
+            box-sizing: border-box;
+            transition: all .5s ease-in-out;
+            overflow: auto;
+            li{
+                list-style: none;
+                padding: 10px 20px;
+                border-bottom: .3px solid #fff;
+                a{
+                    display: block;
+                    text-decoration: none;
+                    color: #fff;
+                }
+            }
+        }
     }
-    .shadowBoxShow{
+
+    .navLinksMove{
         visibility: visible;
         background: rgba(0, 0, 0, 0.3);
-    }
-    > i{
-        font-size: .6em;
-        color: #fff;
-        position: absolute;
-        top: 50%;
-        left: 5px;
-        transform: translateY(-50%);
-        cursor: pointer;
-    }
-}
-
-.brand{
-    display: block;
-    width: 2em;
-    padding: 0 20px;
-    margin: auto;
-    img{
-        display: block;
-        height: 1em;
-        vertical-align: middle;
-        margin: auto;
-    }
-    span{
-        visibility: hidden;
-        font-size: .5em;
-        vertical-align: middle;
-        text-shadow: 1px 1px 0 #fff;
-        color: #fff;
-        text-decoration: none;
-        font-weight: 400;
-    }
-}
-
-.navbarSearch{
-    height: 24px;
-    position: absolute;
-    top: 50%;
-    right: 5px;
-    transform: translateY(-50%);
-    line-height: 24px;
-    z-index: 3;
-    form{
-        display: inline-block;
-        position: relative;
-        vertical-align: top;
-        i, input{
-            transition: all .5s;
-        }
-        i{
-            font-size: 16px;
-            position: absolute;
-            top: 50%;
-            right: 4px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #fff;
-        }
-        input{
-            width: 24px;
-            height: 24px;
-            font-size: 14px;
-            border-radius: 24px;
-            border: none;
-            background: #fcb1d9;
-            box-sizing: border-box;
-            float: right;
-            &:focus{
-                background: #fff;
-            }
+        z-index: 1;
+        ul{
+            margin-left: 0;
         }
     }
 }
 
-.navbarSearchClick{
-    width: 100%;
-    form{
-        width: 100%;
-        padding-left: 10px;
-        box-sizing: border-box;
-        input{
-            width: 100%;
-            padding: 0 26px 0 10px;
-        }
-    }
-}
-
-.navLinks{
-    visibility: hidden;
-    font-size: 16px;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    left: 0;
-    top: 0;
-    transition: all .5s;
-    ul{
-        width: 10em;
-        height: 100%;
-        background: #ff73be;
-        margin: 0 0 0 -10em;
-        padding: 20px 0 0;
-        box-sizing: border-box;
-        transition: all .5s ease-in-out;
-        overflow: auto;
-        li{
-            list-style: none;
-            padding: 10px 20px;
-            border-bottom: .3px solid #fff;
-            a{
-                display: block;
-                text-decoration: none;
-                color: #fff;
-            }
-        }
-    }
-}
-
-.navLinksMove{
-    visibility: visible;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 1;
-    ul{
-        margin-left: 0;
-    }
-}
 
 @media (min-width:768px) {
-    .container{
-        font-size: 40px;
-    }
-    .navbarSearch{
-        font-size: 40px;
+    #navbar{
+        .container{
+            font-size: 40px;
+        }
+        .navbarSearch{
+            font-size: 40px;
+        }
     }
 }
 
 @media (min-width:980px) {
-    .container{
-        font-size: 45px;
-        line-height: 1em;
-        > i{
-            display: none;
-        }
-    }
-    .brand{
-        float: left;
-        width: auto;
-        line-height: 45px;
-        padding: 0 40px 0 0;
-        text-decoration: none;
-        img{
-            margin: 0;
-            display: inline;
-            vertical-align: top;
-        }
-        span{
-            visibility: visible;
-            vertical-align: top;
-            margin-left: -10px;
-        }
-    }
-    .navbarSearch{
-        display: inline-block;
-        position: inherit;
-        vertical-align: top;
-        form{
-            input{
-                width: 230px;
-                padding: 0 26px 0 10px;
+    #navbar{
+        .container{
+            font-size: 45px;
+            line-height: 1em;
+            > i{
+                display: none;
             }
-            &:hover{
+        }
+        .brand{
+            float: left;
+            width: auto;
+            line-height: 45px;
+            padding: 0 40px 0 0;
+            text-decoration: none;
+            img{
+                margin: 0;
+                display: inline;
+                vertical-align: top;
+            }
+            span{
+                visibility: visible;
+                vertical-align: top;
+                margin-left: -10px;
+            }
+        }
+        .navbarSearch{
+            display: inline-block;
+            position: inherit;
+            vertical-align: top;
+            form{
                 input{
-                    background: #fff;
+                    width: 230px;
+                    padding: 0 26px 0 10px;
                 }
-                > i{
-                    color: #f70085;
+                &:hover{
+                    input{
+                        background: #fff;
+                    }
+                    > i{
+                        color: #f70085;
+                    }
                 }
             }
         }
-    }
-    .navLinks{
-        width: auto;
-        height: auto;
-        visibility: visible;
-        position: inherit;
-        float: right;
-        ul{
+        .navLinks{
             width: auto;
             height: auto;
-            background: none;
-            margin: 0;
-            padding: 0;
-            li{
-                border: none;
-                float: left;
-                padding: 0 0 0 24px;
-                font-size: 13px;
-                &:nth-of-type(1) {
-                    padding: 0;
+            visibility: visible;
+            position: inherit;
+            float: right;
+            ul{
+                width: auto;
+                height: auto;
+                background: none;
+                margin: 0;
+                padding: 0;
+                li{
+                    border: none;
+                    float: left;
+                    padding: 0 0 0 24px;
+                    font-size: 13px;
+                    &:nth-of-type(1) {
+                        padding: 0;
+                    }
                 }
             }
         }
