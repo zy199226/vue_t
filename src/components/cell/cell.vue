@@ -1,12 +1,26 @@
 <template lang="html">
-    <div class="cell">
-
+    <div class="cell" @click="click">
+        abc
     </div>
 </template>
 
 <script>
 export default {
-}
+    data() {
+        return {
+            ttt: this.tab
+        };
+    },
+    props: ['item', 'tab'],
+    beforeUpdate() {
+        // console.log(this);
+    },
+    methods: {
+        click() {
+            // console.log(this);
+        }
+    }
+};
 </script>
 
 <style lang="less">
