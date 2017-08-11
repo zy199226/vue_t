@@ -1,19 +1,16 @@
 <template lang="html">
-    <div class="">
-        <div class="">
-            <button @click="decrease">----</button>
-            <span>{{bbb}}, {{count}}</span>
-            <button @click="include">++++</button>
-        </div>
-        <Mains>
-            <Panel slot="content">
-                <span slot="header" @click="ddd">首页</span>
-                <ListBox slot="container"  v-for="tab in tabs" :key="tab">
-                    <Cell v-for="(item, i) in aaa" :key="i" slot="ListBox"></Cell>
-                </ListBox>
-            </Panel>
-        </Mains>
-    </div>
+    <Mains>
+        <Panel slot="content">
+            <span slot="header" :class="['topicTab', curTab === key ? 'curTab' : '']"
+            v-for="(tab, key, i) in tabs"
+            :key="key"
+            @click="clickTab(key)"
+            >{{tab}}</span>
+            <ListBox slot="container"  v-for="(tab, key, i) in tabs" :key="key" v-if="key === curTab">
+                <Cell v-for="(item, i) in home[key].topics" :key="i" slot="listBox" :item="item"></Cell>
+            </ListBox>
+        </Panel>
+    </Mains>
 </template>
 
 <script>
@@ -32,39 +29,51 @@ export default {
     },
     data() {
         return {
-            tabs: ['all', 'good', 'weex', 'share', 'ask', 'job'],
-            home: this.$store.state.home,
-            count: this.$store.state.count
+            tabs: {
+                all: '全部',
+                good: '精华',
+                weex: 'weex',
+                share: '分享',
+                ask: '问答',
+                job: '工作'
+            },
+            curTab: 'all'
         };
     },
     methods: {
-        ddd() {
-            console.log(this);
+        clickTab(e) {
+            this.curTab = e;
+            if (!this.home[this.curTab].topics) {
+                const page = this.home[this.curTab].page;
+                this.axiosHome(e, page + 1);
+            }
         },
-        include() {
-            this.$store.dispatch('include', 1);
-            console.log(this, this.count);
-        },
-        decrease() {
-            this.$store.dispatch('decrease', 1);
-            console.log(this, this.count);
+        axiosHome(t = 'all', p, l) {
+            this.$store.dispatch('axiosHome', { tab: t, limit: l, page: p });
         }
     },
     created() {
-        this.$store.dispatch('axiosHome', { tab: 'all', limit: 40, pages: 1 });
+        this.axiosHome();
     },
     watch: {
-        all(n, o) {
-            console.log(n, o);
-        },
-        deep: true
     },
     computed: mapState({
-        aaa: state => state.home.all,
-        bbb: state => state.count
+        home: state => state.home
     })
 };
 </script>
 
 <style lang="less">
+    .topicTab{
+        margin: 0 10px;
+        color: #ff69d9;
+        padding: 3px 4px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+    .curTab{
+        background: #ff69d9;
+        color: #fff;
+        border-radius: 3px;
+    }
 </style>

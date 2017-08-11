@@ -1,20 +1,14 @@
 <template lang="html">
-    <div class="topicList">
-        <slot name="ListBox"></slot>
+    <div class="listBox">
+        <slot name="listBox"></slot>
     </div>
 </template>
 
 <script>
 export default {
-    props: ['tab'],
-    methods: {
-        ccc() {
-            // console.log(this);
-        }
-    }
 };
 </script>
 
 <style lang="less">
-    // @import "./topicList.less";
+    @import "./listBox.less";
 </style>

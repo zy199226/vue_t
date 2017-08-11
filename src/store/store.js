@@ -14,35 +14,31 @@ const iaxios = axios.create({
 export default new Vuex.Store({
     state: {
         home: {
-            all: []
-        },
-        count: 0
+            all: [],
+            good: [],
+            weex: [],
+            share: [],
+            ask: [],
+            job: []
+        }
     },
     mutations: {
         axiosHome(state, a) {
-            state.home.all = a.data;
-        },
-        include(state, c) {
-            state.count += c;
-        },
-        decrease(state, c) {
-            state.count -= c;
+            state.home[a.tab] = {
+                topics: a.data,
+                page: a.page
+            };
         }
     },
     actions: {
-        axiosHome({ commit }, { tab, limit = 40, pages = 1 }) {
-            iaxios.get(`topics?tab=${tab}&pages=${pages}&limit=${limit}`).then((response) => {
-                commit('axiosHome', response.data);
+        axiosHome({ commit }, { tab, limit = 26, page = 1 }) {
+            iaxios.get(`topics?tab=${tab}&page=${page}&limit=${limit}`).then((response) => {
+                const data = response.data.data;
+                commit('axiosHome', { data, tab, page });
             }).catch(/*err => console.err(err)*/);
         },
         axios() {
 
-        },
-        include({ commit }, c) {
-            commit('include', c);
-        },
-        decrease({ commit }, c) {
-            commit('decrease', c);
         }
     },
     modules: {
