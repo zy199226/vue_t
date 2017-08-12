@@ -1,11 +1,11 @@
 <template lang="html">
     <Mains>
         <Panel slot="content">
-            <span slot="header" :class="['topicTab', curTab === key ? 'curTab' : '']"
-            v-for="(tab, key, i) in tabs"
-            :key="key"
-            @click="clickTab(key)"
-            >{{tab}}</span>
+            <router-link slot="header" 
+            v-for="(tab, key, i) in tabs" 
+            :key="key" 
+            :class="['topicTab', curTab === key ? 'curTab' : '']" 
+            :to="`?tab=${key}`">{{tab}}</router-link>
             <ListBox slot="container"  v-for="(tab, key, i) in tabs" :key="key" v-if="key === curTab">
                 <Cell v-for="(item, i) in home[key].topics" :key="i" slot="listBox" :item="item"></Cell>
             </ListBox>
@@ -37,43 +37,50 @@ export default {
                 ask: '问答',
                 job: '工作'
             },
-            curTab: 'all'
+            curTab: ''
         };
     },
     methods: {
-        clickTab(e) {
+        axiosTopics(e = 'all') {
             this.curTab = e;
-            if (!this.home[this.curTab].topics) {
-                const page = this.home[this.curTab].page;
-                this.axiosHome(e, page + 1);
-            }
+            this.axiosHome(e);
         },
         axiosHome(t = 'all', p, l) {
             this.$store.dispatch('axiosHome', { tab: t, limit: l, page: p });
         }
     },
     created() {
-        this.axiosHome();
-    },
-    watch: {
+        this.curTab = this.$route.query.tab ? this.$route.query.tab : 'all';
+        this.axiosHome(this.curTab);
     },
     computed: mapState({
         home: state => state.home
-    })
+    }),
+    watch: {
+        $route(e) {
+            this.axiosTopics(e.query.tab);
+        }
+    }
 };
 </script>
 
 <style lang="less">
     .topicTab{
-        margin: 0 10px;
+        margin: 0 5px;
         color: #ff69d9;
         padding: 3px 4px;
         font-size: 14px;
         cursor: pointer;
+        text-decoration: none;
     }
     .curTab{
         background: #ff69d9;
         color: #fff;
         border-radius: 3px;
+    }
+    @media (min-width:412px) {
+        .topicTab{
+            margin: 0 10px;
+        }
     }
 </style>

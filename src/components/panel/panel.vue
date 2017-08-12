@@ -1,7 +1,9 @@
 <template lang="html">
     <div class="panel">
         <div class="header">
-            <slot name="header"></slot>
+            <p>
+                <slot name="header"></slot>
+            </p>
         </div>
         <slot name="container"></slot>
     </div>
