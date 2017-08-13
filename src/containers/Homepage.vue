@@ -1,13 +1,14 @@
 <template lang="html">
     <Mains>
         <Panel slot="content">
-            <router-link slot="header" 
-            v-for="(tab, key, i) in tabs" 
-            :key="key" 
-            :class="['topicTab', curTab === key ? 'curTab' : '']" 
+            <router-link slot="header"
+            v-for="(tab, key, i) in tabs"
+            :key="key"
+            :class="['topicTab', curTab === key ? 'curTab' : '']"
             :to="`?tab=${key}`">{{tab}}</router-link>
             <ListBox slot="container"  v-for="(tab, key, i) in tabs" :key="key" v-if="key === curTab">
                 <Cell v-for="(item, i) in home[key].topics" :key="i" slot="listBox" :item="item"></Cell>
+                <Pagination slot="listBox" :tab="key"></Pagination>
             </ListBox>
         </Panel>
     </Mains>
@@ -19,13 +20,15 @@ import Mains from '../components/main/main.vue';
 import Panel from '../components/panel/panel.vue';
 import ListBox from '../components/listBox/listBox.vue';
 import Cell from '../components/cell/cell.vue';
+import Pagination from '../components/pagination/pagination.vue';
 
 export default {
     components: {
         Mains,
         Panel,
         ListBox,
-        Cell
+        Cell,
+        Pagination
     },
     data() {
         return {
