@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { ww, wh, stopBubble } from '../../until/until';
+import { ww, wh, stopBubble, bus } from '../../until/until';
 
 export default {
     data() {
@@ -78,6 +78,7 @@ export default {
             this.windowH = winH;
             this.windowW = winW;
             this.headerHeight = headerHeight;
+            bus.$emit('navbarHeight', this.headerHeight, this.windowW, this.windowH);
         },
         inputFocus() {
             if (this.windowW > 980) {
@@ -92,6 +93,7 @@ export default {
     },
     mounted() {
         this.headerHeight = this.$refs.container.offsetHeight;
+        bus.$emit('navbarHeight', this.headerHeight, this.windowW, this.windowH);
         window.onresize = () =>
         this.windowResize(window.innerHeight, window.innerWidth, this.$refs.container.offsetHeight);
     }

@@ -6,6 +6,15 @@
 
 <script>
 export default {
+    props: ['otherHeight'],
+    computed: {
+        otherH() {
+            if (this.otherHeight === 'auto') {
+                return 'auto';
+            }
+            return 88;
+        }
+    }
 };
 </script>
 

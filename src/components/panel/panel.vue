@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="panel">
-        <div class="header">
+        <div class="header" ref="header">
             <p>
                 <slot name="header"></slot>
             </p>
@@ -11,6 +11,9 @@
 
 <script>
 export default {
+    mounted() {
+        this.$emit('headerHeight', this.$refs.header.offsetHeight);
+    }
 };
 </script>
 

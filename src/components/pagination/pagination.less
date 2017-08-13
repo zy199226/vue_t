@@ -1,0 +1,54 @@
+.pagination{
+    padding: 10px 0;
+    text-align: center;
+    ul{
+        display: inline-block;
+        padding: 0;
+        border-radius: 4px;
+        margin: 0;
+        zoom: 1;
+        &::after{
+            content: '';
+            display: table;
+            clear: both;
+            visibility: hidden;
+        }
+        li{
+            list-style: none;
+            float: left;
+            margin-left: -1px;
+            a{
+                display: block;
+                color: #999;
+                cursor: default;
+                background-color: transparent;
+                text-decoration: none;
+                padding: 4px 10px;
+                line-height: 20px;
+                border: 1px solid #ddd;
+            }
+            &:nth-of-type(1) {
+                a{
+                    border-radius: 4px 0 0 4px;
+                }
+            }
+            &:nth-last-of-type(1) {
+                a{
+                    border-radius: 0 4px 4px 0;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 412px) {
+    .pagination{
+        ul{
+            li{
+                a{
+                    padding: 4px 12px;
+                }
+            }
+        }
+    }
+}

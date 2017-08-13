@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 export const wh = window.innerHeight;
 
 export const ww = window.innerWidth;
@@ -36,3 +38,5 @@ export const time = (date) => {
     }
     return createTime;
 };
+
+export const bus = new Vue();
