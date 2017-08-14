@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="listBox">
+    <div class="listBox" :style="`height: ${oh}`">
         <slot name="listBox"></slot>
     </div>
 </template>
@@ -8,11 +8,8 @@
 export default {
     props: ['otherHeight'],
     computed: {
-        otherH() {
-            if (this.otherHeight === 'auto') {
-                return 'auto';
-            }
-            return 88;
+        oh() {
+            return this.otherHeight === 'auto' ? 'auto' : `${this.otherHeight}px`;
         }
     }
 };

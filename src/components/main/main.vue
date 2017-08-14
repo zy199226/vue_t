@@ -1,8 +1,6 @@
 <template lang="html">
     <div id="main">
-        <div id="sideBar">
-            <slot name="sideBar"></slot>
-        </div>
+        <slot name="sideBar"></slot>
         <div id="content">
             <slot name="content"></slot>
         </div>

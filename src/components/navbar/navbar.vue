@@ -7,14 +7,13 @@
                 <img src="../../assets/vue.png" alt="vue_t">
                 <span>Vue.js</span>
             </router-link>
-            <div :class="['navbarSearch', { navbarSearchClick: (Focus && windowW<980) }]">
+            <div :class="['navbarSearch', { navbarSearchClick: Focus }]">
                 <form action="/search">
                     <input type="text" ref="searchInput"
                     @focus="inputFocus"
                     @blur="inputBlur"
-                    :style="{ background: Focus ? '#fff' : '#fcb1d9' }"
                     :disabled="windowW<980 ? true : false">
-                    <i @click="search" :style="{ color: Focus ? '#f70085' : '#fff' }">&#xe901;</i>
+                    <i @click="search">&#xe901;</i>
                 </form>
             </div>
             <div :class="['navLinks', { navLinksMove: slideBar }]"
