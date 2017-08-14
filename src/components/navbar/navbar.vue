@@ -95,7 +95,11 @@ export default {
         this.headerHeight = this.$refs.container.offsetHeight;
         bus.$emit('navbarHeight', this.headerHeight, this.windowW, this.windowH);
         window.onresize = () =>
-        this.windowResize(window.innerHeight, window.innerWidth, this.$refs.container.offsetHeight);
+            this.windowResize(
+                window.innerHeight,
+                window.innerWidth,
+                this.$refs.container.offsetHeight
+            );
     }
 };
 </script>

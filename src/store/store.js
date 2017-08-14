@@ -35,7 +35,7 @@ export default new Vuex.Store({
             iaxios.get(`topics?tab=${tab}&page=${page}&limit=${limit}`).then((response) => {
                 const data = response.data.data;
                 commit('axiosHome', { data, tab, page });
-            }).catch(/*err => console.err(err)*/);
+            }).catch(/* err => console.err(err) */);
         },
         axios() {
 
