@@ -1,13 +1,21 @@
 <template lang="html">
     <div id="sideBar">
         <Panel>
-            <div class="header" slot="header">
+            <div class="header" slot="header" v-if="success">
                 <span>个人信息</span>
             </div>
-            <div class="inner sign" slot="container">
+            <div class="inner sign" slot="container" v-if="!success">
                 <p>Vue：Vue.js专业中文社区</p>
                 <input type="text" placeholder="Access Token" v-model="at">
                 <button @click="login">登录</button>
+            </div>
+            <div class="inner user" slot="container" v-if="success">
+                <router-link :to="{ name: '', params: {} }">
+                    <img :src="avatar_url" :alt="loginname" :title="loginname">
+                    <span>{{loginname}}</span>
+                </router-link>
+                <p><span>积分：0</span></p>
+                <p>“这家伙很懒，什么个性签名都没有留下。”</p>
             </div>
         </Panel>
         <!-- <Panel>
@@ -59,6 +67,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import Panel from '../panel/panel.vue';
 
 export default {
@@ -73,10 +82,15 @@ export default {
     methods: {
         login() {
             if (this.at) {
-                this.$store.dispatch();
+                this.$store.dispatch('axiosLogin', this.at);
             }
         }
-    }
+    },
+    computed: mapState({
+        success: state => state.login.success,
+        avatar_url: state => state.login.avatar_url,
+        loginname: state => state.login.loginname
+    })
 };
 </script>
 

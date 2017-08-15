@@ -5,12 +5,6 @@ import axios from 'axios';
 
 Vue.use(Vuex);
 
-const iaxios = axios.create({
-    baseURL: 'https://www.vue-js.com/api/v1/',
-    // timeout: 1000,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-});
-
 export default new Vuex.Store({
     state: {
         home: {
@@ -20,6 +14,9 @@ export default new Vuex.Store({
             share: [],
             ask: [],
             job: []
+        },
+        login: {
+            success: false
         }
     },
     mutations: {
@@ -28,17 +25,30 @@ export default new Vuex.Store({
                 topics: a.data,
                 page: a.page
             };
+        },
+        axiosLogin(state, a) {
+            state.login = a;
         }
     },
     actions: {
         axiosHome({ commit }, { tab, limit = 26, page = 1 }) {
-            iaxios.get(`topics?tab=${tab}&page=${page}&limit=${limit}`).then((response) => {
+            axios.get(`https://www.vue-js.com/api/v1/topics?tab=${tab}&page=${page}&limit=${limit}`).then((response) => {
                 const data = response.data.data;
                 commit('axiosHome', { data, tab, page });
             }).catch(/* err => console.err(err) */);
         },
-        axios() {
-
+        axiosLogin({ commit }, accesstoken) {
+            axios({
+                method: 'post',
+                url: 'https://www.vue-js.com/api/v1/accesstoken',
+                data: `accesstoken=${accesstoken}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((response) => {
+                commit('axiosLogin', response.data);
+                window.localStorage.setItem('accesstoken', accesstoken);
+            }).catch(err => alert(`未知错误：${err}`));
         }
     },
     modules: {

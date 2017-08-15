@@ -15,6 +15,12 @@ export default {
     components: {
         Navbar,
         BFooter
+    },
+    created() {
+        const accesstoken = window.localStorage.getItem('accesstoken');
+        if (accesstoken) {
+            this.$store.dispatch('axiosLogin', accesstoken);
+        }
     }
 };
 </script>
