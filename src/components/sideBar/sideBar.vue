@@ -15,14 +15,14 @@
                     <span>{{loginname}}</span>
                 </router-link>
                 <p><span>积分：0</span></p>
-                <p>“这家伙很懒，什么个性签名都没有留下。”</p>
+                <p>"这家伙很懒，什么个性签名都没有留下。"</p>
             </div>
         </Panel>
-        <!-- <Panel>
+        <Panel v-if="success">
             <div class="inner" slot="container">
-                <router-link :to="{ name: '', params: {} }">发布话题</router-link>
+                <router-link class="aSuccess" :to="{ name: '', params: {} }">发布话题</router-link>
             </div>
-        </Panel> -->
+        </Panel>
         <Panel>
             <div class="inner ad" slot="container">
                 <a href="http://weekly.vue-js.com/#/">

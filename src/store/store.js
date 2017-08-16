@@ -28,6 +28,11 @@ export default new Vuex.Store({
         },
         axiosLogin(state, a) {
             state.login = a;
+        },
+        loginOut(state) {
+            state.login = {
+                success: false
+            };
         }
     },
     actions: {

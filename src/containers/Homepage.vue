@@ -8,7 +8,7 @@
                     v-for="(tab, key, i) in tabs"
                     :key="key"
                     :class="['topicTab', curTab === key ? 'curTab' : '']"
-                    :to="`?tab=${key}`">{{tab}}</router-link>
+                    :to="`/?tab=${key}`">{{tab}}</router-link>
                 </p>
             </div>
             <ListBox slot="container"  v-for="(tab, key, i) in tabs" :key="key" v-if="key === curTab"

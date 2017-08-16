@@ -20,9 +20,13 @@
             @click="slideBarMove"
             :style="windowW<980 ? `top: ${headerHeight}px;height: ${windowH - headerHeight}px` : ''">
                 <ul @click="stop(this)">
-                    <li v-for="link in navLinks">
+                    <li v-for="link in navLinks"
+                    :style="link.login !== success || link.login === 2 ? '' : 'padding: 0'">
                         <a v-if="link.src.match('http')" :href="link.src">{{link.name}}</a>
-                        <router-link v-else :to="link.src">{{link.name}}</router-link>
+                        <a v-else-if="link.name === '退出'" @click="loginOut">{{link.name}}</a>
+                        <router-link v-else-if="link.login === 2 || link.login !== success"
+                        :to="link.src"
+                        >{{link.name}}</router-link>
                     </li>
                 </ul>
             </div>
@@ -31,20 +35,22 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import { ww, wh, stopBubble, bus } from '../../until/until';
 
 export default {
     data() {
         return {
             navLinks: [
-                { name: '首页', src: '/' },
-                { name: '未读消息', src: '/' },
-                { name: 'VUE 2.0', src: 'http://doc.vue-js.com' },
-                { name: '参考资料', src: '/' },
-                { name: 'API', src: '/' },
-                { name: '关于', src: '/' },
-                { name: '设置', src: '/' },
-                { name: '退出', src: '/' }
+                { name: '首页', src: '/', login: 2 },
+                { name: '未读消息', src: '/', login: false },
+                { name: 'VUE 2.0', src: 'http://doc.vue-js.com', login: 2 },
+                { name: '参考资料', src: '/', login: 2 },
+                { name: 'API', src: '/', login: 2 },
+                { name: '关于', src: '/', login: 2 },
+                { name: '设置', src: '/', login: false },
+                { name: '退出', src: '/', login: false },
+                { name: '登录', src: '/', login: true }
             ],
             Focus: false,
             slideBar: false,
@@ -88,6 +94,10 @@ export default {
             if (this.windowW > 980) {
                 this.Focus = false;
             }
+        },
+        loginOut() {
+            this.$store.commit('loginOut');
+            window.localStorage.removeItem('accesstoken');
         }
     },
     mounted() {
@@ -99,7 +109,10 @@ export default {
                 window.innerWidth,
                 this.$refs.container.offsetHeight
             );
-    }
+    },
+    computed: mapState({
+        success: state => state.login.success
+    })
 };
 </script>
 

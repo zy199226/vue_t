@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="cell" @click="click">
+    <div class="cell">
         <router-link class="userAvatar" :to="{ name: '', params: {} }">
             <img :src="item.author.avatar_url" :title="item.author.loginname">
         </router-link>
@@ -13,7 +13,7 @@
             <span v-if="tips === 'top'">置顶</span>
             <span v-else-if="tips === 'good'">精华</span>
             <span v-else class="normal">{{tabs[tips]}}</span>
-            <router-link :to="{ name: '', params: {} }">
+            <router-link :to="`/topic?id=${item.id}`">
                 {{item.title}}
             </router-link>
         </div>
@@ -37,11 +37,6 @@ export default {
         };
     },
     props: ['item'],
-    methods: {
-        click() {
-            console.log(this);
-        }
-    },
     computed: {
         lastTime() {
             return time(this.item.last_reply_at);
