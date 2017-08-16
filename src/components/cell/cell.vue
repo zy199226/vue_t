@@ -13,7 +13,7 @@
             <span v-if="tips === 'top'">置顶</span>
             <span v-else-if="tips === 'good'">精华</span>
             <span v-else class="normal">{{tabs[tips]}}</span>
-            <router-link :to="`/topic?id=${item.id}`">
+            <router-link :to="`/topic/${item.id}`">
                 {{item.title}}
             </router-link>
         </div>

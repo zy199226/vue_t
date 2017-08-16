@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="panel">
-        <slot name="header" ref="header"></slot>
+        <slot name="header"></slot>
         <slot name="container"></slot>
     </div>
 </template>

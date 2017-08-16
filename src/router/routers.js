@@ -12,7 +12,7 @@ export default new Router({
             path: '/',
             component: Homepage
         }, {
-            path: '/topic',
+            path: '/topic/:id',
             component: Topic
         }
     ]

@@ -24,7 +24,7 @@ export const time = (date) => {
     if (year >= 1) {
         createTime = `${year}年前`;
     } else if (mouth >= 1) {
-        createTime = `${mouth}月前`;
+        createTime = `${mouth}个月前`;
     } else if (day >= 1) {
         createTime = `${day}天前`;
     } else if (hours >= 1) {

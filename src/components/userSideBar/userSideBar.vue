@@ -2,12 +2,7 @@
     <div id="sideBar">
         <Panel>
             <div class="header" slot="header" v-if="success">
-                <span>个人信息</span>
-            </div>
-            <div class="inner sign" slot="container" v-if="!success">
-                <p>Vue：Vue.js专业中文社区</p>
-                <input type="text" placeholder="Access Token" v-model="at">
-                <button @click="login">登录</button>
+                <span>作者</span>
             </div>
             <div class="inner user" slot="container" v-if="success">
                 <router-link :to="{ name: '', params: {} }">
@@ -16,18 +11,6 @@
                 </router-link>
                 <p><span>积分：0</span></p>
                 <p>"这家伙很懒，什么个性签名都没有留下。"</p>
-            </div>
-        </Panel>
-        <Panel v-if="success">
-            <div class="inner" slot="container">
-                <router-link id="aSuccess" :to="{ name: '', params: {} }">发布话题</router-link>
-            </div>
-        </Panel>
-        <Panel>
-            <div class="inner ad" slot="container">
-                <a href="http://weekly.vue-js.com/#/">
-                    <img src="../../assets/1.png" alt="">
-                </a>
             </div>
         </Panel>
         <Panel>
@@ -45,16 +28,7 @@
         </Panel>
         <Panel>
             <div class="header" slot="header">
-                <span>社区交流群</span>
-            </div>
-            <div class="inner qq" slot="container">
-                <img width="200" src="../../assets/5.png" alt="">
-                <a>扫码快速入群</a>
-            </div>
-        </Panel>
-        <Panel>
-            <div class="header" slot="header">
-                <span>友情社区</span>
+                <span>作者其他话题</span>
             </div>
             <div class="inner ie" slot="container">
                 <a href="http://www.getweapp.com/">微信小程序学习社群</a>
@@ -74,6 +48,7 @@ export default {
     components: {
         Panel
     },
+    props: ['title'],
     data() {
         return {
             at: ''
@@ -90,10 +65,13 @@ export default {
         success: state => state.login.success,
         avatar_url: state => state.login.avatar_url,
         loginname: state => state.login.loginname
-    })
+    }),
+    created() {
+        // console.log(this);
+    }
 };
 </script>
 
 <style lang="less">
-    @import "./sideBar.less";
+    @import "./userSideBar.less";
 </style>

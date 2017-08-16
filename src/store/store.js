@@ -17,6 +17,11 @@ export default new Vuex.Store({
         },
         login: {
             success: false
+        },
+        topic: {
+            author: {
+                loginname: ''
+            }
         }
     },
     mutations: {
@@ -33,6 +38,9 @@ export default new Vuex.Store({
             state.login = {
                 success: false
             };
+        },
+        axiosTopic(state, a) {
+            state.topic = a;
         }
     },
     actions: {
@@ -54,6 +62,11 @@ export default new Vuex.Store({
                 commit('axiosLogin', response.data);
                 window.localStorage.setItem('accesstoken', accesstoken);
             }).catch(err => alert(`未知错误：${err}`));
+        },
+        axiosTopic({ commit }, id) {
+            axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then((response) => {
+                commit('axiosTopic', response.data.data);
+            }).catch();
         }
     },
     modules: {
