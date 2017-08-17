@@ -22,6 +22,12 @@ export default new Vuex.Store({
             author: {
                 loginname: ''
             }
+        },
+        userDetail: {
+
+        },
+        loginDetail: {
+
         }
     },
     mutations: {
@@ -41,6 +47,12 @@ export default new Vuex.Store({
         },
         axiosTopic(state, a) {
             state.topic = a;
+        },
+        axiosUserDetail(state, a) {
+            state.userDetail = a;
+        },
+        axiosLoginDetail(state, a) {
+            state.loginDetail = a;
         }
     },
     actions: {
@@ -50,7 +62,7 @@ export default new Vuex.Store({
                 commit('axiosHome', { data, tab, page });
             }).catch(/* err => console.err(err) */);
         },
-        axiosLogin({ commit }, accesstoken) {
+        axiosLogin({ commit, dispatch }, accesstoken) {
             axios({
                 method: 'post',
                 url: 'https://www.vue-js.com/api/v1/accesstoken',
@@ -60,13 +72,29 @@ export default new Vuex.Store({
                 }
             }).then((response) => {
                 commit('axiosLogin', response.data);
+                dispatch('axiosLoginDetail', response.data.loginname);
                 window.localStorage.setItem('accesstoken', accesstoken);
             }).catch(err => alert(`未知错误：${err}`));
         },
-        axiosTopic({ commit }, id) {
+        axiosLoginDetail({ commit, state }, loginname) {
+            if (state.loginDetail.loginname !== loginname) {
+                axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
+                    commit('axiosLoginDetail', response.data.data);
+                }).catch();
+            }
+        },
+        axiosTopic({ commit, dispatch }, id) {
             axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then((response) => {
                 commit('axiosTopic', response.data.data);
+                dispatch('axiosUserDetail', response.data.data.author.loginname);
             }).catch();
+        },
+        axiosUserDetail({ commit, state }, loginname) {
+            if (state.userDetail.loginname !== loginname) {
+                axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
+                    commit('axiosUserDetail', response.data.data);
+                }).catch();
+            }
         }
     },
     modules: {

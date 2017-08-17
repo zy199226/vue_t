@@ -1,5 +1,5 @@
 <template lang="html">
-    <Mains>
+    <Mains :style="ww < 980 ? `height: ${wh - nh}px;overflow: auto` : ''">
         <userSideBar slot="sideBar"></userSideBar>
         <Panel slot="content">
             <div class="header topicHeader" slot="header" style="background: #fff">
@@ -22,8 +22,22 @@
             <div class="header" slot="header">
                 <span>{{replyCount}} 回复</span>
             </div>
-            <div class="">
-                
+            <div class="cell replyCell" slot="container" v-for="(reply, i) of replies" :id="reply.id">
+                <router-link class="userAvatar" :to="{ name: '', params: {} }">
+                    <img :src="reply.author.avatar_url" :alt="reply.author.loginname">
+                </router-link>
+                <div class="reply">
+                    <div class="userInfo">
+                        <router-link :to="{ name: '', params: {} }">{{reply.author.loginname}}</router-link>
+                        <span>{{i}}楼●{{createAt(reply.create_at)}}</span>
+                        <div class="userUp">
+                            <button><i>&#xe902;</i><span v-if="reply.ups.length !== 0">{{reply.ups.length}}</span></button>
+                            <button><i>&#xe967;</i></button>
+                        </div>
+                    </div>
+                    <div class="replyContent" v-html="reply.content">
+                    </div>
+                </div>
             </div>
         </Panel>
     </Mains>
@@ -35,7 +49,7 @@ import Mains from '../components/main/main.vue';
 import Panel from '../components/panel/panel.vue';
 import userSideBar from '../components/userSideBar/userSideBar.vue';
 
-import { time } from '../until/until';
+import { ww, wh, time, bus } from '../until/until';
 
 const tabs = {
     all: '全部',
@@ -49,6 +63,9 @@ const tabs = {
 export default {
     data() {
         return {
+            nh: '',
+            ww,
+            wh
         };
     },
     components: {
@@ -56,8 +73,10 @@ export default {
         Panel,
         userSideBar
     },
-    mounted() {
-        // console.log(this);
+    methods: {
+        createAt(t) {
+            return time(t);
+        }
     },
     computed: mapState({
         title: state => state.topic.title,
@@ -68,10 +87,21 @@ export default {
         visitCount: state => state.topic.visit_count,
         tab: state => tabs[state.topic.tab],
         content: state => state.topic.content,
-        replyCount: state => state.topic.reply_count
+        replyCount: state => state.topic.reply_count,
+        replies: state => state.topic.replies
     }),
     created() {
         this.$store.dispatch('axiosTopic', this.$route.params.id);
+        bus.$on('navbarHeight', (nh, ww, wh) => {
+            this.nh = nh;
+            this.ww = ww;
+            this.wh = wh;
+        });
+    },
+    watch: {
+        $route(e) {
+            this.$store.dispatch('axiosTopic', e.params.id);
+        }
     }
 };
 </script>
@@ -120,7 +150,7 @@ export default {
             right: 10px;
         }
     }
-    div.inner{
+    div.topicContent{
         padding: 10px 20px;
         h1, h2, h3, h4, h5, h6{
             margin: 30px 0 15px;
@@ -142,6 +172,7 @@ export default {
         }
         img{
             height: auto;
+            max-width: 100%;
         }
         pre{
             font-size: 14px;
@@ -152,11 +183,87 @@ export default {
             border-width: 1px 0;
             background: #f7f7f7;
             line-height: 1.7em;
+            overflow: auto;
         }
         blockquote{
             padding: 0 0 0 15px;
             margin: 0 0 20px;
             border-left: 5px solid #eee;
+        }
+    }
+    div.replyCell{
+        padding: 10px;
+        font-size: 14px;
+        border-top: 1px solid #f0f0f0;
+        background: #fff;
+        position: relative;
+        zoom: 1;
+        &::after{
+            content: '';
+            clear: both;
+            display: table;
+            visibility: hidden;
+        }
+        .userAvatar{
+            text-decoration: none;
+            float: left;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 3px;
+            }
+        }
+        .reply{
+            padding-left: 40px;
+            box-sizing: border-box;
+            .userInfo{
+                a{
+                    font-size: 12px;
+                    color: #666;
+                    text-decoration: none;
+                    &:hover{
+                        color: #ff7ec8;
+                    }
+                }
+                span{
+                    font-size: 11px;
+                }
+                .userUp{
+                    float: right;
+                    button{
+                        border: none;
+                        background: none;
+                        outline: none;
+                        cursor: pointer;
+                        padding: 0 2px;
+
+                        span{
+                            margin-left: 3px;
+                        }
+                        i{
+                            color: #666;
+                        }
+                        &:hover{
+                            i{
+                                color: #ff7ec8;
+                            }
+                        }
+                    }
+                }
+            }
+            .replyContent{
+                padding: 1px 0;
+                p{
+                    font-size: 15px;
+                    line-height: 1.7em;
+                    overflow: auto;
+                    white-space: pre-wrap;
+                    white-space: -moz-pre-wrap;
+                    white-space: -o-pre-wrap;
+                    word-wrap: break-word;
+                    color: #333;
+                }
+            }
         }
     }
 }

@@ -14,8 +14,8 @@
                     <img :src="avatar_url" :alt="loginname" :title="loginname">
                     <span>{{loginname}}</span>
                 </router-link>
-                <p><span>积分：0</span></p>
-                <p>"这家伙很懒，什么个性签名都没有留下。"</p>
+                <p><span>积分：{{score}}</span></p>
+                <p>"API返回的数据没有这一项。。。"</p>
             </div>
         </Panel>
         <Panel v-if="success">
@@ -89,7 +89,8 @@ export default {
     computed: mapState({
         success: state => state.login.success,
         avatar_url: state => state.login.avatar_url,
-        loginname: state => state.login.loginname
+        loginname: state => state.login.loginname,
+        score: state => state.loginDetail.score
     })
 };
 </script>

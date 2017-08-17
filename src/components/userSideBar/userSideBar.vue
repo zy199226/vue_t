@@ -1,16 +1,16 @@
 <template lang="html">
     <div id="sideBar">
         <Panel>
-            <div class="header" slot="header" v-if="success">
+            <div class="header" slot="header">
                 <span>作者</span>
             </div>
-            <div class="inner user" slot="container" v-if="success">
+            <div class="inner user" slot="container">
                 <router-link :to="{ name: '', params: {} }">
                     <img :src="avatar_url" :alt="loginname" :title="loginname">
                     <span>{{loginname}}</span>
                 </router-link>
-                <p><span>积分：0</span></p>
-                <p>"这家伙很懒，什么个性签名都没有留下。"</p>
+                <p><span>积分：{{score}}</span></p>
+                <p>"API返回的数据没有这一项。。。"</p>
             </div>
         </Panel>
         <Panel>
@@ -31,10 +31,7 @@
                 <span>作者其他话题</span>
             </div>
             <div class="inner ie" slot="container">
-                <a href="http://www.getweapp.com/">微信小程序学习社群</a>
-                <a href="http://www.ctolib.com/">CTOLib码库</a>
-                <a href="https://www.hubwiz.com/">汇智网</a>
-                <a href="https://www.w3cvip.org/">w3c社区-前端专业综合性技术交流平台</a>
+                <router-link :to="`/topic/${topic.id}`" v-for="(topic, i) of recentTopics" :key="i">{{topic.title}}</router-link>
             </div>
         </Panel>
     </div>
@@ -62,9 +59,10 @@ export default {
         }
     },
     computed: mapState({
-        success: state => state.login.success,
-        avatar_url: state => state.login.avatar_url,
-        loginname: state => state.login.loginname
+        avatar_url: state => state.userDetail.avatar_url,
+        loginname: state => state.userDetail.loginname,
+        score: state => state.userDetail.score,
+        recentTopics: state => state.userDetail.recent_topics
     }),
     created() {
         // console.log(this);

@@ -76,7 +76,7 @@ export default {
     computed: mapState({
         home: state => state.home,
         otherHeight() {
-            return this.windowH - this.navbarHeight - 38;
+            return this.windowH - this.navbarHeight - 38.4;
         }
     }),
     watch: {
