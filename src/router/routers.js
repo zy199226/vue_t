@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import Homepage from '../containers/Homepage.vue';
 import Topic from '../containers/Topic.vue';
+import User from '../containers/User.vue';
 
 Vue.use(Router);
 
@@ -14,6 +15,9 @@ export default new Router({
         }, {
             path: '/topic/:id',
             component: Topic
+        }, {
+            path: '/user/:loginname',
+            component: User
         }
     ]
 });

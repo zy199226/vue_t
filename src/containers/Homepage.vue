@@ -1,6 +1,6 @@
 <template lang="html">
     <Mains>
-        <SideBar slot="sideBar"></SideBar>
+        <SideBar slot="sideBar" :user="user" :visibility="true"></SideBar>
         <Panel slot="content">
             <div class="header" slot="header">
                 <p>
@@ -77,7 +77,8 @@ export default {
         home: state => state.home,
         otherHeight() {
             return this.windowH - this.navbarHeight - 38.4;
-        }
+        },
+        user: state => state.loginDetail
     }),
     watch: {
         $route(e) {

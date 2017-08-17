@@ -44,6 +44,7 @@ export default new Vuex.Store({
             state.login = {
                 success: false
             };
+            state.loginDetail = {};
         },
         axiosTopic(state, a) {
             state.topic = a;

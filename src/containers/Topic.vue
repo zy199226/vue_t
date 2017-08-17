@@ -1,6 +1,6 @@
 <template lang="html">
     <Mains :style="ww < 980 ? `height: ${wh - nh}px;overflow: auto` : ''">
-        <userSideBar slot="sideBar"></userSideBar>
+        <sideBar slot="sideBar" :user="user" :visibility="false"></sideBar>
         <Panel slot="content">
             <div class="header topicHeader" slot="header" style="background: #fff">
                 <div class="title">
@@ -11,7 +11,7 @@
                 <button>加入收藏</button>
                 <div class="changes">
                     <span>● 发布于 {{createTime}}</span>
-                    <span>● 作者 <router-link :to="{ name: '', params: {} }">{{author}}</router-link></span>
+                    <span>● 作者 <router-link :to="`/user/${author}`">{{author}}</router-link></span>
                     <span>● {{visitCount}} 次浏览</span>
                     <span>● 来自 {{tab}}</span>
                 </div>
@@ -23,12 +23,12 @@
                 <span>{{replyCount}} 回复</span>
             </div>
             <div class="cell replyCell" slot="container" v-for="(reply, i) of replies" :id="reply.id">
-                <router-link class="userAvatar" :to="{ name: '', params: {} }">
+                <router-link class="userAvatar" :to="`/user/${reply.author.loginname}`">
                     <img :src="reply.author.avatar_url" :alt="reply.author.loginname">
                 </router-link>
                 <div class="reply">
                     <div class="userInfo">
-                        <router-link :to="{ name: '', params: {} }">{{reply.author.loginname}}</router-link>
+                        <router-link :to="`/user/${reply.author.loginname}`">{{reply.author.loginname}}</router-link>
                         <span>{{i}}楼●{{createAt(reply.create_at)}}</span>
                         <div class="userUp">
                             <button><i>&#xe902;</i><span v-if="reply.ups.length !== 0">{{reply.ups.length}}</span></button>
@@ -47,7 +47,7 @@
 import { mapState } from 'vuex';
 import Mains from '../components/main/main.vue';
 import Panel from '../components/panel/panel.vue';
-import userSideBar from '../components/userSideBar/userSideBar.vue';
+import sideBar from '../components/sideBar/sideBar.vue';
 
 import { ww, wh, time, bus } from '../until/until';
 
@@ -71,7 +71,7 @@ export default {
     components: {
         Mains,
         Panel,
-        userSideBar
+        sideBar
     },
     methods: {
         createAt(t) {
@@ -88,7 +88,8 @@ export default {
         tab: state => tabs[state.topic.tab],
         content: state => state.topic.content,
         replyCount: state => state.topic.reply_count,
-        replies: state => state.topic.replies
+        replies: state => state.topic.replies,
+        user: state => state.userDetail
     }),
     created() {
         this.$store.dispatch('axiosTopic', this.$route.params.id);

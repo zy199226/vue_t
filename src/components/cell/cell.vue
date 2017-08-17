@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="cell">
-        <router-link class="userAvatar" :to="{ name: '', params: {} }">
+        <router-link class="userAvatar" :to="`/user/${item.author.loginname}`">
             <img :src="item.author.avatar_url" :title="item.author.loginname">
         </router-link>
         <span class="replyCount">
