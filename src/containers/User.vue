@@ -1,7 +1,9 @@
 <template lang="html">
     <Mains>
         <SideBar slot="sideBar" :user="user" :visibility="true"></SideBar>
-        
+        <Panel slot="content">
+            
+        </Panel>
     </Mains>
 </template>
 
