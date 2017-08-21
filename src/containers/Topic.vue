@@ -22,7 +22,7 @@
             <div class="header" slot="header">
                 <span>{{replyCount}} 回复</span>
             </div>
-            <div class="cell replyCell" slot="container" v-for="(reply, i) of replies" :id="reply.id">
+            <div class="cell replyCell" slot="container" v-for="(reply, i) of replies">
                 <router-link class="userAvatar" :to="`/user/${reply.author.loginname}`">
                     <img :src="reply.author.avatar_url" :alt="reply.author.loginname">
                 </router-link>
@@ -31,8 +31,12 @@
                         <router-link :to="`/user/${reply.author.loginname}`">{{reply.author.loginname}}</router-link>
                         <span>{{i}}楼●{{createAt(reply.create_at)}}</span>
                         <div class="userUp">
-                            <button><i>&#xe902;</i><span v-if="reply.ups.length !== 0">{{reply.ups.length}}</span></button>
-                            <button><i>&#xe967;</i></button>
+                            <button @click="upThis(reply.id)"
+                            :style="ups[i] ? 'color:#ff7ec8' : ''"
+                            >
+                                <i>&#xe902;</i>
+                                <span v-if="reply.ups.length !== 0">{{reply.ups.length}}</span></button>
+                            <button  v-if="token"><i>&#xe967;</i></button>
                         </div>
                     </div>
                     <div class="replyContent" v-html="reply.content">
@@ -65,7 +69,8 @@ export default {
         return {
             nh: '',
             ww,
-            wh
+            wh,
+            ups: []
         };
     },
     components: {
@@ -76,6 +81,15 @@ export default {
     methods: {
         createAt(t) {
             return time(t);
+        },
+        upThis(replyId) {
+            if (this.token) {
+                this.$store.dispatch('axiosUp', replyId);
+            }
+        },
+        up(a, b) {
+            const ups = a.map(reply => reply.ups.some(up => up === b));
+            this.ups = ups;
         }
     },
     computed: mapState({
@@ -89,7 +103,9 @@ export default {
         content: state => state.topic.content,
         replyCount: state => state.topic.reply_count,
         replies: state => state.topic.replies,
-        user: state => state.userDetail
+        user: state => state.userDetail,
+        token: state => state.token,
+        loginId: state => state.login.id
     }),
     created() {
         this.$store.dispatch('axiosTopic', this.$route.params.id);
@@ -102,6 +118,9 @@ export default {
     watch: {
         $route(e) {
             this.$store.dispatch('axiosTopic', e.params.id);
+        },
+        replies(e) {
+            this.up(e, this.loginId);
         }
     }
 };
@@ -237,17 +256,12 @@ export default {
                         outline: none;
                         cursor: pointer;
                         padding: 0 2px;
-
+                        color: #666;
                         span{
                             margin-left: 3px;
                         }
-                        i{
-                            color: #666;
-                        }
                         &:hover{
-                            i{
-                                color: #ff7ec8;
-                            }
+                            color: #ff7ec8;
                         }
                     }
                 }

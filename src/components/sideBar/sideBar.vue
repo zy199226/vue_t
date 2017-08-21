@@ -97,10 +97,7 @@ export default {
     },
     computed: mapState({
         success: state => state.login.success
-    }),
-    mounted() {
-        console.log(this);
-    }
+    })
 };
 </script>
 

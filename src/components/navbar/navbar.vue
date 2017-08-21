@@ -23,7 +23,7 @@
                     <li v-for="link in navLinks"
                     :style="link.login !== success || link.login === 2 ? '' : 'padding: 0'">
                         <a v-if="link.src.match('http')" :href="link.src">{{link.name}}</a>
-                        <a v-else-if="link.name === '退出'" @click="loginOut">{{link.name}}</a>
+                        <a v-else-if="link.name === '退出' && link.login !== success" @click="loginOut">{{link.name}}</a>
                         <router-link v-else-if="link.login === 2 || link.login !== success"
                         :to="link.src"
                         >{{link.name}}</router-link>

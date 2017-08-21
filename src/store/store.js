@@ -28,7 +28,8 @@ export default new Vuex.Store({
         },
         loginDetail: {
 
-        }
+        },
+        token: ''
     },
     mutations: {
         axiosHome(state, a) {
@@ -38,13 +39,15 @@ export default new Vuex.Store({
             };
         },
         axiosLogin(state, a) {
-            state.login = a;
+            state.login = a.data;
+            state.token = a.accesstoken;
         },
         loginOut(state) {
             state.login = {
                 success: false
             };
             state.loginDetail = {};
+            state.token = '';
         },
         axiosTopic(state, a) {
             state.topic = a;
@@ -72,7 +75,8 @@ export default new Vuex.Store({
                     'Content-Type': 'application/x-www-form-urlencoded'
                 }
             }).then((response) => {
-                commit('axiosLogin', response.data);
+                const data = response.data;
+                commit('axiosLogin', { data, accesstoken });
                 dispatch('axiosLoginDetail', response.data.loginname);
                 window.localStorage.setItem('accesstoken', accesstoken);
             }).catch(err => alert(`未知错误：${err}`));
@@ -96,6 +100,22 @@ export default new Vuex.Store({
                     commit('axiosUserDetail', response.data.data);
                 }).catch();
             }
+        },
+        axiosUp({ dispatch, state }, replyId) {
+            axios({
+                method: 'post',
+                url: `https://www.vue-js.com/api/v1/reply/${replyId}/ups`,
+                data: `accesstoken=${state.token}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((response) => {
+                if (response.data.success) {
+                    dispatch('axiosTopic', state.topic.id);
+                } else {
+                    alert('呵呵，你不能为自己点赞！！！');
+                }
+            });
         }
     },
     modules: {
