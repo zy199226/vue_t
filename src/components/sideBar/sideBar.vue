@@ -20,7 +20,7 @@
         </Panel>
         <Panel v-if="success">
             <div class="inner" slot="container">
-                <router-link id="aSuccess" :to="{ name: '', params: {} }">发布话题</router-link>
+                <router-link id="aSuccess" to="/create">发布话题</router-link>
             </div>
         </Panel>
         <Panel v-if="visibility">
