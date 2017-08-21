@@ -8,7 +8,7 @@
                     <span v-else-if="good">精华</span>
                     {{title}}
                 </div>
-                <button>加入收藏</button>
+                <button @click="collectThis" :style="collect ? 'background: #ccc' : ''">{{collect ? '取消收藏' : '加入收藏'}}</button>
                 <div class="changes">
                     <span>● 发布于 {{createTime}}</span>
                     <span>● 作者 <router-link :to="`/user/${author}`">{{author}}</router-link></span>
@@ -29,20 +29,26 @@
                 <div class="reply">
                     <div class="userInfo">
                         <router-link :to="`/user/${reply.author.loginname}`">{{reply.author.loginname}}</router-link>
-                        <span>{{i}}楼●{{createAt(reply.create_at)}}</span>
+                        <span>{{i + 1}}楼●{{createAt(reply.create_at)}}</span>
                         <div class="userUp">
-                            <button @click="upThis(reply.id)"
-                            :style="ups[i] ? 'color:#ff7ec8' : ''"
-                            >
+                            <button @click="upThis(reply.id)" :style="ups[i] ? 'color:#ff7ec8' : ''">
                                 <i>&#xe902;</i>
                                 <span v-if="reply.ups.length !== 0">{{reply.ups.length}}</span></button>
-                            <button  v-if="token"><i>&#xe967;</i></button>
+                            <button @click="replyThis(reply.id)" v-if="token"><i>&#xe967;</i></button>
                         </div>
                     </div>
-                    <div class="replyContent" v-html="reply.content">
+                    <div class="replyContent" v-html="reply.content"></div>
+                    <div class="replyThis" :ref="reply.id">
+                        <Reply slot="container"  @replyThis="replyThis" :replyId="reply.id" :loginname="reply.author.loginname" v-if="token"></Reply>
                     </div>
                 </div>
             </div>
+        </Panel>
+        <Panel slot="content" v-if="token">
+            <div class="header" slot="header">
+                <span>添加回复</span>
+            </div>
+            <Reply slot="container"></Reply>
         </Panel>
     </Mains>
 </template>
@@ -52,6 +58,7 @@ import { mapState } from 'vuex';
 import Mains from '../components/main/main.vue';
 import Panel from '../components/panel/panel.vue';
 import sideBar from '../components/sideBar/sideBar.vue';
+import Reply from '../components/reply/reply.vue';
 
 import { ww, wh, time, bus } from '../until/until';
 
@@ -69,14 +76,14 @@ export default {
         return {
             nh: '',
             ww,
-            wh,
-            ups: []
+            wh
         };
     },
     components: {
         Mains,
         Panel,
-        sideBar
+        sideBar,
+        Reply
     },
     methods: {
         createAt(t) {
@@ -85,11 +92,25 @@ export default {
         upThis(replyId) {
             if (this.token) {
                 this.$store.dispatch('axiosUp', replyId);
+            } else {
+                alert('请先登录！！！');
             }
         },
-        up(a, b) {
-            const ups = a.map(reply => reply.ups.some(up => up === b));
-            this.ups = ups;
+        replyThis(e) {
+            const reply = this.$refs[e][0];
+            if (reply.classList.contains('replyThis')) {
+                reply.classList.remove('replyThis');
+                reply.querySelector('textarea').focus();
+            } else {
+                reply.classList.add('replyThis');
+            }
+        },
+        collectThis() {
+            if (this.collect) {
+                this.$store.dispatch('axiosCollect', 'de');
+            } else {
+                this.$store.dispatch('axiosCollect');
+            }
         }
     },
     computed: mapState({
@@ -105,7 +126,13 @@ export default {
         replies: state => state.topic.replies,
         user: state => state.userDetail,
         token: state => state.token,
-        loginId: state => state.login.id
+        ups: state => state.topic.replies.map(reply => reply.ups.some(up => up === state.login.id)),
+        collect: (state) => {
+            if (state.loginDetail.collect_topics) {
+                return state.loginDetail.collect_topics.some(topic => topic.id === state.topic.id);
+            }
+            return false;
+        }
     }),
     created() {
         this.$store.dispatch('axiosTopic', this.$route.params.id);
@@ -118,9 +145,6 @@ export default {
     watch: {
         $route(e) {
             this.$store.dispatch('axiosTopic', e.params.id);
-        },
-        replies(e) {
-            this.up(e, this.loginId);
         }
     }
 };
@@ -278,9 +302,16 @@ export default {
                     word-wrap: break-word;
                     color: #333;
                 }
+                li{
+                    line-height: 1.7em;
+                }
             }
         }
     }
+}
+
+.replyThis{
+    display: none;
 }
 
 @media (min-width:768px) {

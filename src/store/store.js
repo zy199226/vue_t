@@ -82,11 +82,11 @@ export default new Vuex.Store({
             }).catch(err => alert(`未知错误：${err}`));
         },
         axiosLoginDetail({ commit, state }, loginname) {
-            if (state.loginDetail.loginname !== loginname) {
-                axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
-                    commit('axiosLoginDetail', response.data.data);
-                }).catch();
-            }
+            // if (state.loginDetail.loginname !== loginname) {
+            // }
+            axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
+                commit('axiosLoginDetail', response.data.data);
+            }).catch();
         },
         axiosTopic({ commit, dispatch }, id) {
             axios.get(`https://www.vue-js.com/api/v1/topic/${id}`).then((response) => {
@@ -114,6 +114,40 @@ export default new Vuex.Store({
                     dispatch('axiosTopic', state.topic.id);
                 } else {
                     alert('呵呵，你不能为自己点赞！！！');
+                }
+            });
+        },
+        axiosReply({ dispatch, state }, { replyId, content }) {
+            const data = replyId ? `accesstoken=${state.token}&content=${content}&reply_id=${replyId}` : `accesstoken=${state.token}&content=${content}`;
+            axios({
+                method: 'post',
+                url: `https://www.vue-js.com/api/v1/topic/${state.topic.id}/replies`,
+                data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((response) => {
+                if (response.data.success) {
+                    dispatch('axiosTopic', state.topic.id);
+                } else {
+                    alert('不知道为什么出错了！！！');
+                }
+            });
+        },
+        axiosCollect({ dispatch, state }, a) {
+            const url = a === 'de' ? 'https://www.vue-js.com/api/v1/topic/de_collect' : 'https://www.vue-js.com/api/v1/topic/collect';
+            axios({
+                method: 'post',
+                url,
+                data: `accesstoken=${state.token}&topic_id=${state.topic.id}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((response) => {
+                if (response.data.success) {
+                    dispatch('axiosLoginDetail', state.login.loginname);
+                } else {
+                    alert('不知道为什么出错了！！！');
                 }
             });
         }
