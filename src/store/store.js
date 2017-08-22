@@ -23,13 +23,14 @@ export default new Vuex.Store({
                 loginname: ''
             }
         },
-        userDetail: {
-
-        },
-        loginDetail: {
-
-        },
-        token: ''
+        userDetail: {},
+        loginDetail: {},
+        token: '',
+        message: {
+            count: 0,
+            has_read_messages: [],
+            hasnot_read_messages: []
+        }
     },
     mutations: {
         axiosHome(state, a) {
@@ -57,6 +58,12 @@ export default new Vuex.Store({
         },
         axiosLoginDetail(state, a) {
             state.loginDetail = a;
+        },
+        axiosMessage(state, a) {
+            state.message = Object.assign(state.message, a);
+        },
+        axiosMessageCount(state, a) {
+            state.message = Object.assign(state.message, a);
         }
     },
     actions: {
@@ -164,6 +171,30 @@ export default new Vuex.Store({
                     alert('不知道为什么出错了！！！');
                 }
             });
+        },
+        axiosMessage({ commit, state }) {
+            if (state.token) {
+                axios.get(`https://www.vue-js.com/api/v1/messages?accesstoken=${state.token}`).then(res => res.data.data).then((data) => {
+                    commit('axiosMessage', data);
+                });
+            }
+        },
+        axiosMarkAll({ state }) {
+            if (state.token) {
+                axios({
+                    method: 'post',
+                    url: 'https://www.vue-js.com/api/v1/message/mark_all',
+                    data: `accesstoken=${state.token}`,
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                });
+            }
+        },
+        axiosMessageCount({ state, commit }) {
+            axios.get(`https://www.vue-js.com/api/v1/message/count?accesstoken=${state.token}`)
+                .then(res => res.data.data)
+                .then(count => commit('axiosMessageCount', count));
         }
     },
     modules: {

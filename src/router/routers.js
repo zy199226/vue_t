@@ -5,6 +5,7 @@ import Homepage from '../containers/Homepage.vue';
 import Topic from '../containers/Topic.vue';
 import User from '../containers/User.vue';
 import createTopic from '../containers/createTopic.vue';
+import Message from '../containers/Message.vue';
 
 Vue.use(Router);
 
@@ -22,6 +23,12 @@ export default new Router({
         }, {
             path: '/create',
             component: createTopic
+        }, {
+            path: '/message',
+            component: Message
+        }, {
+            path: '/getstart',
+            component: Message
         }
     ]
 });
