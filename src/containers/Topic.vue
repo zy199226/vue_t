@@ -245,7 +245,6 @@ export default {
         &::after{
             content: '';
             clear: both;
-            display: table;
             visibility: hidden;
         }
         .userAvatar{

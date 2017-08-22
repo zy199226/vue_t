@@ -16,10 +16,12 @@ export default {
         Navbar,
         BFooter
     },
-    created() {
+    beforeCreate() {
         const accesstoken = window.localStorage.getItem('accesstoken');
         if (accesstoken) {
             this.$store.dispatch('axiosLogin', accesstoken);
+        } else if (this.$route.path === '/create') {
+            window.location.href = './';
         }
     }
 };

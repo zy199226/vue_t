@@ -81,9 +81,7 @@ export default new Vuex.Store({
                 window.localStorage.setItem('accesstoken', accesstoken);
             }).catch(err => alert(`未知错误：${err}`));
         },
-        axiosLoginDetail({ commit, state }, loginname) {
-            // if (state.loginDetail.loginname !== loginname) {
-            // }
+        axiosLoginDetail({ commit }, loginname) {
             axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
                 commit('axiosLoginDetail', response.data.data);
             }).catch();
@@ -146,6 +144,22 @@ export default new Vuex.Store({
             }).then((response) => {
                 if (response.data.success) {
                     dispatch('axiosLoginDetail', state.login.loginname);
+                } else {
+                    alert('不知道为什么出错了！！！');
+                }
+            });
+        },
+        axiosNewTopic({ state }, a) {
+            axios({
+                method: 'post',
+                url: 'https://www.vue-js.com/api/v1/topics',
+                data: `accesstoken=${state.token}&title=${a.title}&tab=${a.tab}&content=${a.content}`,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then((response) => {
+                if (response.data.success) {
+                    window.location.href = `./#/topic/${response.data.topic_id}`;
                 } else {
                     alert('不知道为什么出错了！！！');
                 }
