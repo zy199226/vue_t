@@ -18,6 +18,7 @@ export default {
     },
     beforeCreate() {
         const accesstoken = window.localStorage.getItem('accesstoken');
+        console.log(accesstoken);
         if (accesstoken) {
             this.$store.dispatch('axiosLogin', accesstoken);
         } else if (this.$route.path === '/create' || this.$route.path === '/message') {
