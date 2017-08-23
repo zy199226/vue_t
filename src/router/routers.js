@@ -7,6 +7,7 @@ import User from '../containers/User.vue';
 import createTopic from '../containers/createTopic.vue';
 import Message from '../containers/Message.vue';
 import GetStart from '../containers/GetStart.vue';
+import Signin from '../containers/Signin.vue';
 
 Vue.use(Router);
 
@@ -30,6 +31,9 @@ export default new Router({
         }, {
             path: '/getstart',
             component: GetStart
+        }, {
+            path: '/signin',
+            component: Signin
         }
     ]
 });

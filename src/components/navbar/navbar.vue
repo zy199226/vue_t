@@ -51,7 +51,7 @@ export default {
                 { name: '关于', src: 'https://www.vue-js.com/about', login: 2 },
                 { name: '设置', src: '/', login: false },
                 { name: '退出', src: '/', login: false },
-                { name: '登录', src: '/', login: true }
+                { name: '登录', src: '/signin', login: true }
             ],
             Focus: false,
             slideBar: false,

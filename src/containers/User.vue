@@ -85,6 +85,9 @@ export default {
     a{
         color: #fe76d1;
         text-decoration: none;
+        &:hover{
+            text-decoration: underline;
+        }
     }
 }
 .userInner{
