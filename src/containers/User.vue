@@ -2,7 +2,7 @@
     <Mains :style="ww < 980 ? `height: ${wh - nh}px;overflow: auto` : ''">
         <SideBar slot="sideBar" :user="user" :visibility="true"></SideBar>
         <Panel slot="content">
-            <div class="header" slot="header">
+            <div class="header userHeader" slot="header">
                 <router-link :to="`/`">主页</router-link> /
             </div>
             <div class="inner userInner" slot="container">
@@ -79,7 +79,7 @@ export default {
 </script>
 
 <style lang="less">
-.header{
+.userHeader{
     color: #777;
     a{
         color: #fe76d1;
