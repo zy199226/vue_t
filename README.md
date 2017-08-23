@@ -17,7 +17,7 @@
 ## 预览
 [点击这里查看DEMO](https://zy199226.github.io/vue_t/#/)
 
-![DEMO二维码](https://zy199226.github.io/vue_t/dist/vvvv.png)
+![DEMO二维码](https://raw.githubusercontent.com/zy199226/vue_t/master/dist/vvvv.png)
 
 ## 运行项目
 ```
