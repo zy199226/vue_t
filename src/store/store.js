@@ -192,9 +192,11 @@ export default new Vuex.Store({
             }
         },
         axiosMessageCount({ state, commit }) {
-            axios.get(`https://www.vue-js.com/api/v1/message/count?accesstoken=${state.token}`)
-                .then(res => res.data.data)
-                .then(count => commit('axiosMessageCount', count));
+            if (state.token) {
+                axios.get(`https://www.vue-js.com/api/v1/message/count?accesstoken=${state.token}`)
+                    .then(res => res.data.data)
+                    .then(count => commit('axiosMessageCount', count));
+            }
         }
     },
     modules: {

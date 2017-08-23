@@ -97,8 +97,8 @@ export default {
             }
         },
         loginOut() {
-            this.$store.commit('loginOut');
             window.localStorage.removeItem('accesstoken');
+            this.$store.commit('loginOut');
         }
     },
     mounted() {
