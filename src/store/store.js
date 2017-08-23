@@ -86,7 +86,7 @@ export default new Vuex.Store({
                 commit('axiosLogin', { data, accesstoken });
                 dispatch('axiosLoginDetail', response.data.loginname);
                 window.localStorage.setItem('accesstoken', accesstoken);
-            }).catch(err => alert(`未知错误：${err}`));
+            }).catch(/* err => alert(`未知错误：${err}`) */);
         },
         axiosLoginDetail({ commit }, loginname) {
             axios.get(`https://www.vue-js.com/api/v1/user/${loginname}`).then((response) => {
