@@ -1,6 +1,20 @@
 <template lang="html">
     <Mains :style="ww < 980 ? `height: ${wh - nh}px;overflow: auto` : ''">
-        <sideBar slot="sideBar" :user="user" :visibility="true"></sideBar>
+        <Panel slot="sideBar" id="sideBar">
+            <div class="header signHeader" slot="header">
+                <span>关于</span>
+            </div>
+            <div class="inner signSideInner" slot="container">
+                <p>Vue：Vue.js专业中文社区</p>
+                <p>在这里你可以：</p>
+                <ul>
+                    <li>向别人提出你遇到的问题</li>
+                    <li>帮助遇到问题的人</li>
+                    <li>分享自己的知识</li>
+                    <li>和其它人一起进步</li>
+                </ul>
+            </div>
+        </Panel>
         <Panel slot="content">
             <div class="header signHeader" slot="header">
                 <router-link :to="`/`">主页</router-link> / 登录
@@ -57,8 +71,6 @@ export default {
 
 <style lang="less">
 .signHeader{
-    color: #777;
-    font-size: 14px;
     a{
         color: #fe76d1;
         text-decoration: none;
@@ -90,6 +102,13 @@ export default {
         line-height: 2em;
         border-radius: 3px;
         margin: 10px auto 0;
+    }
+}
+.panel div.signSideInner{
+    line-height: 2em;
+    font-size: 14px;
+    p{
+        margin: 0 0 10px;
     }
 }
 </style>
