@@ -47,8 +47,8 @@ export default {
                 { name: '未读消息', src: '/message', login: false },
                 { name: 'VUE 2.0', src: 'http://doc.vue-js.com', login: 2 },
                 { name: '参考资料', src: '/getstart', login: 2 },
-                { name: 'API', src: '/', login: 2 },
-                { name: '关于', src: '/', login: 2 },
+                { name: 'API', src: 'https://www.vue-js.com/api/', login: 2 },
+                { name: '关于', src: 'https://www.vue-js.com/about', login: 2 },
                 { name: '设置', src: '/', login: false },
                 { name: '退出', src: '/', login: false },
                 { name: '登录', src: '/', login: true }

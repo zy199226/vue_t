@@ -81,6 +81,7 @@ export default {
 <style lang="less">
 .userHeader{
     color: #777;
+    font-size: 14px;
     a{
         color: #fe76d1;
         text-decoration: none;
