@@ -21,6 +21,7 @@
             :style="windowW<980 ? `top: ${headerHeight}px;height: ${windowH - headerHeight}px` : ''">
                 <ul @click="stop(this)">
                     <li v-for="link in navLinks"
+                    @click="slideBarMove"
                     :style="link.login !== success || link.login === 2 ? '' : 'padding: 0'">
                         <span v-if="link.name === '未读消息' && count > 0">{{count}}</span>
                         <a v-if="link.src.match('http')" :href="link.src">{{link.name}}</a>
