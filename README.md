@@ -25,7 +25,7 @@
 ## 运行项目
 ```
   git clone https://github.com/zy199226/vue_t.git
-  cd cnode
+  cd vue_t
   npm install webpack-dev-server webpack -g (没有安装webpack的需要安装)
   npm install
   npm start
